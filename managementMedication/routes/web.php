@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ConsomationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MedicamentController;
@@ -34,6 +35,7 @@ Route::middleware(['auth'])->group(function(){
     Route::middleware('AuthAccess:Manager')->group(function(){
         Route::resource('categorie', CategorieController::class);
         Route::resource('medicament', MedicamentController::class);
+        Route::resource('consomation', ConsomationController::class);
     });
 
     Route::middleware('AuthAccess:Admin')->group(function(){

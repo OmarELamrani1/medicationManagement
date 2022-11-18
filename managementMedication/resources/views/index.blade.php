@@ -34,8 +34,14 @@
                           </td>
                           <td>{{ $medicament->categorie->name }}</td>
                           <td>{{ $medicament->quantite }}</td>
-                          <td><span class="badge bg-label-primary me-1">Active</span></td>
-                          <td>
+                          @forelse ($consomations as $consomation)
+                            <td><span class="badge bg-label-primary me-1">{{ $medicament->quantite - $consomation->quantite }}</span>
+                            </td>
+                          @empty
+                          <td><span class="badge bg-label-primary me-1">{{ $medicament->quantite }}</span>
+                          </td>
+                          @endforelse
+                            <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateMedicament" data-bs-whatever="@getbootstrap">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
@@ -49,6 +55,9 @@
                             </form>
                           </td>
                           <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manger" data-bs-whatever="@getbootstrap">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                 <li
                                   data-bs-toggle="tooltip"
@@ -122,6 +131,37 @@
     </div>
   </div>
 {{------------------------------ Ajouter Médicament ---------------------------------------------------------}}
+
+              <hr class="my-5" />
+
+{{------------------------------ Manger Médicament --------------------------------------------------}}
+
+<div class="modal fade" id="manger" tabindex="-1" aria-labelledby="mangerM" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mangerM">Manger un médicament</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{{ route('consomation.store') }}">
+              @csrf
+            <div class="mb-3">
+              <label for="name" class="col-form-label">Nom du médicament :</label>
+              <input type="text" class="form-control" id="medicament_id" name="medicament_id" value="{{ $medicament->id }}" readonly><br>
+              <input type="number" min="0" max="{{ $medicament->quantite }}" class="form-control" id="quantite" name="quantite">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{{------------------------------ Manger Médicament ---------------------------------------------------------}}
 
               <hr class="my-5" />
 

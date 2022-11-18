@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Consomation extends Model
 {
     use HasFactory;
+    protected $fillable = ['medicament_id', 'quantite'];
+
+    public function traitement(){
+        return $this->hasMany(Medicament::class, 'medicament_id');
+    }
 }

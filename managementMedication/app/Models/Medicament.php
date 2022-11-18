@@ -17,4 +17,8 @@ class Medicament extends Model
     public function categorie(){
         return $this->belongsTo(Categorie::class);
     }
+
+    public function consomation(){
+        return $this->belongsTo(Consomation::class);
+    }
 }

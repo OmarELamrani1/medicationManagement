@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConsomationRequest;
 use App\Models\Consomation;
+use App\Models\Medicament;
 use Illuminate\Http\Request;
 
 class ConsomationController extends Controller
@@ -27,15 +29,13 @@ class ConsomationController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ConsomationRequest $request)
     {
-        //
+        $consomation = Consomation::create($request->validated());
+        $medicament = Medicament::where('id', $consomation->medicament_id)->first();
+        $medicament->quantite = $medicament->quantite - $consomation->quantite;
+        $medicament->save();
+        return redirect()->back();
     }
 
     /**
